@@ -1,0 +1,71 @@
+#Product of Array Except Itself
+  
+# Thoughts:
+# 1. I actually solved it dp way using recursion and memoization.
+# 2. The solution using prefix/suffix is better and easier as recursion can be expensize.
+# 3. There is a super optimized solution with O(1) sc without counting output array.
+
+#Dp way
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n = len(nums)
+        res = []
+        prefix_memo = {}
+        suffix_memo = {}
+        def prefix(i):
+            if i == 0:
+                return 1
+            if i in prefix_memo:
+                return prefix_memo[i]
+            prefix_memo[i] = prefix(i - 1) * nums[i - 1]
+            return prefix_memo[i]
+
+        def suffix(i):
+            if i == n - 1:
+                return 1
+            if i in suffix_memo:
+                return suffix_memo[i]
+            suffix_memo[i] = suffix(i + 1) * nums[i + 1]
+            return suffix_memo[i]
+
+        for i in range(n):
+            res.append(prefix(i) * suffix(i))
+        return res
+
+#Prefix/Suffix Way
+class Solution:
+    def productExceptSelf(self, nums):
+        n = len(nums)
+        res = [0] * n
+        pref = [0] * n
+        suff = [0] * n
+
+        pref[0] = suff[n - 1] = 1
+        for i in range(1, n):
+            pref[i] = nums[i - 1] * pref[i - 1]
+        for i in range(n - 2, -1, -1):
+            suff[i] = nums[i + 1] * suff[i + 1]
+        for i in range(n):
+            res[i] = pref[i] * suff[i]
+        return res
+
+#Prefix/Suffix(Optimal)
+class Solution:
+    def productExceptSelf(self, nums):
+        res = [1] * (len(nums))
+
+        prefix = 1
+        for i in range(len(nums)):
+            res[i] = prefix
+            prefix *= nums[i]
+        postfix = 1
+        for i in range(len(nums) - 1, -1, -1):
+            res[i] *= postfix
+            postfix *= nums[i]
+        return res
+
+
