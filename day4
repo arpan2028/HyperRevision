@@ -1,0 +1,56 @@
+"""
+  HyperRevision with structure. From today i will be following roadmap of Neetcode and try to quickly complete it solving multiple problems
+  a day as i am already familiar with almost half of them.
+"""
+  
+#Contains Duplicate
+from collections import Counter
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        count = 0
+        hmap = Counter(nums)
+        for value in hmap.values():
+            if value > 1:
+                count = 1
+        return count == 1    
+
+#Valid Anagram
+from collections import Counter
+class Solution(object):
+    def isAnagram(self, s, t):
+        return Counter(s) == Counter(t)
+
+          
+#Two Sum
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        seen = {}
+        for i in range(len(nums)):
+            num = nums[i]
+            if target - num in seen:
+                return [i, seen[target - num]]
+            seen[num] = i
+
+#Top k Frequent Elements
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        res = []
+        hmap = Counter(nums)
+        freq = [[] for i in range(len(nums) + 1)]
+        for key, value in hmap.items():
+            freq[value].append(key)
+
+        for i in range(len(freq) - 1, 0, -1):
+            for j in freq[i]:
+                res.append(j)
+                if len(res) == k:
+                    return res
