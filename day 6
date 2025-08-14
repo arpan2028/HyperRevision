@@ -1,0 +1,48 @@
+"""
+I learnt about the five different usecases of hashmap.
+1️⃣ Frequency Counting
+2️⃣ Fast Lookup / Existence Checking
+3️⃣ Grouping Items by a Key
+4️⃣ Caching & Memoization
+5️⃣ Mapping Relationships(Neighour look up)
+"""
+  
+
+#Longest Consecutive subsequence
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        longest = 0
+        num_set = set(nums)
+        for num in num_set: #use num_set instead of nums to avoid iterating through duplicates 
+            if (num - 1) not in num_set:
+                length = 1
+                while (num + length) in num_set:
+                    length += 1
+                longest = max(longest, length)
+        return longest
+
+#Valid Panlindrome
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        left, right = 0, len(s) - 1
+        while left < right:
+            while left < right and not s[left].isalnum():
+                left += 1
+            while left < right and not s[right].isalnum():
+                right -= 1
+            if s[left].lower() == s[right].lower():
+                left += 1
+                right -= 1
+            else:
+                return False
+        return True
+            
+    
