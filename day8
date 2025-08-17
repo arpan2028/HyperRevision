@@ -1,0 +1,59 @@
+#Valid Parenthesis
+class Solution:
+    def isValid(self, s):
+        hashmap = {
+            ']' : '[',
+            '}' : '{',
+            ')' : '('
+        }
+        stack = []
+
+        for c in s:
+            if c in hashmap:
+                if stack and stack[-1] == hashmap[c]:
+                    stack.pop()
+                else:
+                    return False
+            else:
+                stack.append(c)
+        return not stack
+          
+#Min stack
+class MinStack(object):
+
+    def __init__(self):
+        self.stack = []
+        self.minstack = []
+        
+
+    def push(self, val):
+        """
+        :type val: int
+        :rtype: None
+        """
+        self.stack.append(val)
+        if not self.minstack:
+            self.minstack.append(val)
+        else:
+            self.minstack.append(min(val, self.minstack[-1]))
+        
+
+    def pop(self):
+        """
+        :rtype: None
+        """
+        self.stack.pop()
+        self.minstack.pop()
+        
+
+    def top(self):
+        """
+        :rtype: int
+        """
+        return self.stack[-1]
+
+    def getMin(self):
+        """
+        :rtype: int
+        """
+        return self.minstack[-1]
