@@ -1,0 +1,60 @@
+#Generate Parenthesis
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        stack = []
+        res = []
+
+        def backtrack(openN, closedN):
+            if openN == closedN == n:
+                res.append("".join(stack))
+                return
+
+            if openN < n:
+                stack.append("(")
+                backtrack(openN + 1, closedN)
+                stack.pop()
+
+            if closedN < openN:
+                stack.append(")")
+                backtrack(openN, closedN + 1)
+                stack.pop()
+
+        backtrack(0, 0)
+        return res
+"""       
+Thoughts:
+I think this solution is straightforward.
+It has 3 main conditions:
+1. if openN == closedN ==n then join the stack elements and exit the recursion branch
+2. if openN < n then append ( and backtrack with openN + 1 and closedN
+3. if closedN < openN then append ) and backtrack with openN and closedN + 1
+"""
+
+
+#Daily Temperatures
+class Solution(object):
+    def dailyTemperatures(self, temperatures):
+        """
+        :type temperatures: List[int]
+        :rtype: List[int]
+        """
+        res = [0] * len(temperatures)
+        stack = []
+
+        for i, t in enumerate(temperatures):
+            while stack and t > stack[-1][0]:
+                stackT, stackInd = stack.pop()
+                res[stackInd] = (i - stackInd)
+            stack.append([t, i])
+        return res
+
+"""
+Thoughts:
+1. If stack and current temp is greater than top of stack, pop it and store (i - stackindex) to res[stackIndex]
+2. Append temp and index to stack.
+3. Return stack.
+"""
