@@ -1,0 +1,67 @@
+#Largest Rectangle in Histogram
+class Solution(object):
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        n = len(heights)
+        stack = []
+
+        leftMost = [-1] * n
+
+        for i in range(n):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            if stack:
+                leftMost[i] = stack[-1]
+            stack.append(i)
+
+        stack = []
+        rightMost = [n] * n
+        for i in range(n - 1, -1, -1):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            if stack:
+                rightMost[i] = stack[-1]
+            stack.append(i)
+
+        maxArea = 0
+        for i in range(n):
+            leftMost[i] += 1
+            rightMost[i] -= 1
+            maxArea = max(maxArea, heights[i] * (rightMost[i] - leftMost[i] + 1))
+        return maxArea
+
+# Thoughts
+# This is hard. I feel exhausted.
+# 	1.	For each bar, find how far you can stretch left until hitting a shorter bar.
+# 	2.	Do the same for the right side.
+# 	3.	Use these left and right limits to calculate the widest rectangle possible for each bar.
+# 	4.	The rectangle’s area = bar height × (width between left and right).
+# 	5.	Keep track of the maximum area found and return it.
+
+
+#Daily Temperatures
+#Easy and clear version of yesterday's daily temperatures problem
+class Solution:
+    def dailyTemperatures(self, temperatures):
+        n = len(temperatures)
+        res = [0] * n
+        stack = []  # will store indices
+
+        for i in range(n - 1, -1, -1):
+            # Pop all indices with lower or equal temperature
+            while stack and temperatures[i] >= temperatures[stack[-1]]:
+                stack.pop()
+
+            # If stack not empty, the next warmer day exists
+            if stack:
+                res[i] = stack[-1] - i
+
+            # Push current index
+            stack.append(i)
+
+        return res
+
+  
