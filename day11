@@ -1,0 +1,55 @@
+#Binary Search
+  class Solution(object):
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        start = 0 
+        end = len(nums) - 1
+        while start <= end:
+            mid = (start + end) // 2
+            if nums[mid] < target:
+                start = mid + 1
+            elif nums[mid] > target:
+                end = mid - 1
+            else:
+                return mid
+        return -1
+#Dry run:
+# nums = [2, 5], target = 5
+# start = 0, end = 1
+# mid = 0
+# 2 < 5 start = 0 + 1 = 1
+
+# 1 == 1
+# mid = 1
+# return mid
+  
+
+#Search a 2d matrix
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        rows = len(matrix)
+        cols = len(matrix[0])
+        l, r = 0, (rows * cols - 1)
+        while l <= r:
+            m = l + (r - l) // 2
+            row, col = m // cols, m % cols
+            if target > matrix[row][col]:
+                l = m + 1
+            elif target < matrix[row][col]:
+                r = m - 1
+            else:
+                return True
+        return False
+
+# Thoughts
+# The trick here is how row, col = m // cols, m % cols
+# converts linear value to 2d coordinate
