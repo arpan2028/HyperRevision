@@ -1,0 +1,67 @@
+#Find the duplicate number
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        if not nums:
+            return
+        slow, fast = 0, 0
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
+
+        slow2 = 0
+        while True:
+            slow = nums[slow]
+            slow2 = nums[slow2]
+            if slow == slow2:
+                return slow
+
+# Thoughts:
+# 1. The first while loop proves the array has a cycle(duplicate element).
+# 2. The second while finds out the entry point(the duplicate value).
+
+
+  
+#Reorder list
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reorderList(self, head):
+        """
+        :type head: Optional[ListNode]
+        :rtype: None Do not return anything, modify head in-place instead.
+        """
+        if not head or not head.next:
+            return
+        slow, fast = head, head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        def reverseList(head):
+            current = head
+            prev = None
+            if not head:
+                return 
+            while current:
+                next = current.next
+                current.next = prev
+                prev = current
+                current = next
+            return prev
+        
+        second = reverseList(slow.next)
+        slow.next = None
+        first = head
+        while second:
+            tmp1 = first.next
+            tmp2 = second.next
+            first.next = second
+            second.next = tmp1
+            first = tmp1
+            second = tmp2
+
