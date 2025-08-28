@@ -1,0 +1,57 @@
+MergeKSortedLists
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def mergeKLists(self, lists):
+        if not lists:
+            return None
+        while len(lists) > 1:
+            merged = []
+            for i in range(0, len(lists), 2):
+                l1 = lists[i]
+                l2 = lists[i + 1] if (i + 1) < len(lists) else None
+                merged.append(self.mergeTwolists(l1, l2))
+            lists = merged
+        return lists[0]
+
+    def mergeTwolists(self, l1, l2):
+        dummy = ListNode(0)
+        current = dummy
+        while l1 and l2:
+            if l1.val <= l2.val:
+                current.next = l1
+                l1 = l1.next
+            else:
+                current.next = l2
+                l2 = l2.next
+            current = current.next
+        current.next = l1 or l2
+        return dummy.next
+
+InvertBinaryTree
+class Solution:
+    def invertTree(self, root):
+        while not root:
+            return
+        root.left, root.right = root.right, root.left
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+        return root
+          
+MaxDepthofBinaryTree
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: int
+        """
+        while not root:
+            return 0
+        left = self.maxDepth(root.left)
+        right = self.maxDepth(root.right)
+        return 1 + max(left, right)
+        
