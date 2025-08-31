@@ -1,0 +1,37 @@
+Validate Binary Search Tree
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: bool
+        """
+        def dfs(node, low, high):
+            if not node:
+                return True
+            if not (low < node.val < high):
+                return False
+            return dfs(node.left, low, node.val) and dfs(node.right, node.val, high)
+        return dfs(root, float('-inf'), float('inf'))
+
+
+Kth Smallest Element in a BST
+class Solution:
+    def kthSmallest(self, root, k):
+        self.k = k
+        self.result = None
+
+        def inorder(node):
+            if node is None or self.result is not None:
+                return
+
+            inorder(node.left)
+            
+            self.k -= 1
+            if self.k == 0:
+                self.result = node.val
+                return
+            
+            inorder(node.right)
+
+        inorder(root)
+        return self.result
