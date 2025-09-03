@@ -1,0 +1,31 @@
+# class TreeNode:
+#     def __init__(self, val: int):
+#         self.val = val
+#         self.left: Optional['TreeNode'] = None
+#         self.right: Optional['TreeNode'] = None
+
+class Solution:
+    def buildTree(self, preorder, inorder):
+        indices = {val: idx for idx, val in enumerate(inorder)}
+        self.pre_idx = 0
+        def dfs(l, r):
+            if l > r:
+                return None
+
+            root_val = preorder[self.pre_idx]
+            self.pre_idx += 1
+            root = TreeNode(root_val)
+
+            mid = indices[root_val]
+            root.left = dfs(l, mid - 1)
+            root.right = dfs(mid + 1, r)
+            return root
+
+        return dfs(0, len(inorder) - 1)
+
+"""
+Thoughts:
+I think this method is really cool. The Complexities are
+TC - O(n) (previously O(n2))
+SC - O(n)
+"""
