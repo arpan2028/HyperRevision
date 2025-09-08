@@ -1,0 +1,63 @@
+Combination
+class Solution(object):
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        def backtrack(start, path):
+            if len(path) == k:
+                res.append(path[:])
+                return
+            
+            if len(path) > k:
+                return
+            
+            for i in range(start, n + 1):
+                path.append(i)
+                backtrack(i + 1, path)
+                path.pop()
+
+        backtrack(1, [])
+        return res
+"""
+TC- O(C(n, k) * k)
+SC - O(C(n,k) * k)
+"""
+
+Combinations Sum
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        total = 0
+        def backtrack(start, path, total):
+            if total == target:
+                res.append(path[:])
+                return res
+
+            if total > target:
+                return res
+
+            for i in range(start, len(candidates)):
+                path.append(candidates[i])
+                backtrack(i, path, total + candidates[i])
+                path.pop()
+
+        backtrack(0, [], 0)
+        return res 
+"""
+ TC- O(2^t/m) where t = target and m = min. value in nums 
+ SC - O(t/m)
+"""       
+
+
+
+
+                
