@@ -1,0 +1,33 @@
+#Combination Sum 2
+class Solution(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        candidates.sort()
+        total = 0
+        def backtrack(start, path, total):
+            if total == target:
+                res.append(path[:])
+                return res
+
+            if total > target:
+                return res
+
+            for i in range(start, len(candidates)):
+                if i > start and candidates[i] == candidates[i - 1]:
+                    continue
+                path.append(candidates[i])
+                backtrack(i + 1, path, total + candidates[i])
+                path.pop()
+
+        backtrack(0, [], 0)
+        return res 
+
+"""
+TC - O(n * 2^n)
+SC - O(n * 2^n)(including results)
+""" 
