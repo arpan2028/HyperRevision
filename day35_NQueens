@@ -1,0 +1,62 @@
+N Queens(Un-Optimized Solution to understand)
+  
+from typing import List
+
+class Solution:
+    def isSafe(self, board: List[str], row: int, col: int, n: int) -> bool:
+        # horizontal
+        for j in range(n):
+            if board[row][j] == 'Q':
+                return False
+
+        # vertical
+        for i in range(n):
+            if board[i][col] == 'Q':
+                return False
+
+        # left diagonal (↖)
+        i, j = row, col
+        while i >= 0 and j >= 0:
+            if board[i][j] == 'Q':
+                return False
+            i -= 1
+            j -= 1
+
+        # right diagonal (↗)
+        i, j = row, col
+        while i >= 0 and j < n:
+            if board[i][j] == 'Q':
+                return False
+            i -= 1
+            j += 1
+
+        return True
+
+    def nQueens(self, board: List[str], row: int, n: int, ans: List[List[str]]):
+        if row == n:
+            ans.append(board[:])  # make a copy
+            return
+
+        for j in range(n):
+            if self.isSafe(board, row, j, n):
+                # place queen
+                board[row] = board[row][:j] + 'Q' + board[row][j+1:]
+                self.nQueens(board, row + 1, n, ans)
+                # backtrack
+                board[row] = board[row][:j] + '.' + board[row][j+1:]
+
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        board = ["." * n for _ in range(n)]
+        ans = []
+        self.nQueens(board, 0, n, ans)
+        return ans
+
+
+# Example usage
+if __name__ == "__main__":
+    solver = Solution()
+    solutions = solver.solveNQueens(4)
+    for sol in solutions:
+        for row in sol:
+            print(row)
+        print()
