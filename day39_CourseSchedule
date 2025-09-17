@@ -1,0 +1,48 @@
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        prereqs = defaultdict(list)
+        for c, p in prerequisites:
+            prereqs[c].append(p)
+
+        def cycle(course, seen):
+            if course in seen:
+                return True
+            seen.add(course)
+            for p in prereqs[course]:
+                if cycle(p, seen):
+                    return True
+            prereqs[course] = []
+            seen.remove(course)
+            return False
+
+        seen = set()
+        for course in range(numCourses):
+            if cycle(course, seen):
+                return False
+        return True    
+
+
+
+ #TC - O(N + E)
+ #SC - O(N + E)
+            
+#Dry run for :
+# numCourses = 2
+# prerequisites = [[1, 0],  [0, 1]]
+
+# prereqs =[
+# '1':0,
+# '0':1
+# ]
+# for first loop,]
+# cycle(0, [])
+#seen = {0}
+# p in prereqs[0] is 1
+# cycle(1, {0, 1})
+# cycle(0, {0, 1}), returns True so outer loop returns False
+
