@@ -1,0 +1,48 @@
+from collections import defaultdict
+
+class Solution(object):
+    def findOrder(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: List[int]
+        """
+        prereqs = defaultdict(list)
+        for c, p in prerequisites:
+            prereqs[c].append(p)
+
+        order = []
+        seen = set()
+        done = set()   #courses that are already placed in order
+
+        def cycle(course):
+            if course in seen:   #cycle detected
+                return True
+            if course in done:   #already processed
+                return False
+
+            seen.add(course)
+            for p in prereqs[course]:
+                if cycle(p):
+                    return True
+            seen.remove(course)
+
+            done.add(course)     #mark finished
+            order.append(course)
+            return False      
+
+        for course in range(numCourses):
+            if cycle(course):
+                return []           
+        return order
+
+
+"""
+Thoughts:
+The method used to solve here is also called topological sorting. Basically we are checking:
+Course Schedule I = “Is it acyclic?”
+Course Schedule II = “If acyclic, what’s the order?”
+
+TC - O(V + E), V is the no of courses, E is the prerequisites
+SC - O(V + E)
+"""        
