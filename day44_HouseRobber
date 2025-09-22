@@ -1,0 +1,42 @@
+#Tabulation
+class Solution:
+    def rob(self, nums):
+        n = len(nums)
+        dp = [-1] * n
+
+        def rob_from(i):
+            if i >= n:
+                return 0
+
+            if dp[i] != -1:
+                return dp[i]
+
+            dp[i] = max(rob_from(i + 1), nums[i] + rob_from(i + 2))
+            return dp[i]
+
+        return rob_from(0)
+
+
+
+
+
+#Memoization
+class Solution:
+    def rob(self, nums):
+        n = len(nums)
+        dp = [-1] * n
+
+        def rob_from(i):
+            if i >= n:
+                return 0
+
+            if dp[i] != -1:
+                return dp[i]
+
+            dp[i] = max(rob_from(i + 1), nums[i] + rob_from(i + 2))
+            return dp[i]
+
+        return rob_from(0)
+
+
+
