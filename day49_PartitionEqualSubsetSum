@@ -1,0 +1,18 @@
+from typing import List
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total % 2 != 0:
+            return False   # odd sum cannot be split evenly
+
+        target = total // 2
+        dp = [False] * (target + 1)
+        dp[0] = True       # we can always make sum 0
+
+        for num in nums:
+            for j in range(target, num - 1, -1):  # go backwards
+                if dp[j - num]:
+                    dp[j] = True
+
+        return dp[target]
