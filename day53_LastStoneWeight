@@ -1,0 +1,46 @@
+#Sorting Method
+class Solution(object):
+    def lastStoneWeight(self, stones):
+        """
+        :type stones: List[int]
+        :rtype: int
+        """
+  
+        for i in range(len(stones) - 1):
+            stones.sort()
+            if stones[-2] <= stones[-1]:
+                stones[-1] = stones[-1] - stones[-2]
+                stones.pop(-2)
+            else:
+                stones[-2] = stones[-2] - stones[-1]
+                stones.pop(-1)
+        return stones[0]
+
+# TC - O(n^2 log n)
+# SC - O(1) or 0(n)
+
+          
+#Heap Method
+import heapq
+class Solution(object):
+    def lastStoneWeight(self, stones):
+        """
+        :type stones: List[int]
+        :rtype: int
+        """
+        stones = [-s for s in stones]
+        heapq.heapify(stones)
+
+        for i in range(len(stones) - 1):
+            y = -heapq.heappop(stones)
+            x = -heapq.heappop(stones)
+
+            if x <= y:
+                heapq.heappush(stones, -(y - x))
+            else:
+                heapq.heappush(stones, -(x - y))
+        
+        return -stones[0] if stones else 0
+    
+# TC - O(nlogn)
+# SC - 0(n)
