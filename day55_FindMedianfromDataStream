@@ -1,0 +1,75 @@
+#Normal Implementation
+class MedianFinder(object):
+
+    def __init__(self):
+        self.data = []
+        
+
+    def addNum(self, num):
+        """
+        :type num: int
+        :rtype: None
+        """
+        self.data.append(num)
+
+    def findMedian(self):
+        """
+        :rtype: float
+        """
+        self.data.sort()
+        n = len(self.data)
+        return float(self.data[n // 2] if (n & 1) else
+                (self.data[ n // 2] + self.data[n // 2 - 1]) / 2.0)
+
+#TC - O(m) for addNum(), O(m * nlogn) for findMedian()
+#SC - O(n)
+
+#We need to explicitly cast both odd and even case for float
+#For odd use float keyword and for even case divide by 2.0 
+
+
+
+#Heap Implementation
+class MedianFinder(object):
+
+    def __init__(self):
+        self.small, self.large = [], []
+        
+
+    def addNum(self, num):
+        """
+        :type num: int
+        :rtype: None
+        """
+        heapq.heappush(self.small, -1 * num)
+
+        if (self.small and self.large and 
+            (-1 * self.small[0]) > self.large[0]):
+            val = -1 * heapq.heappop(self.small)
+            heapq.heappush(self.large, val)
+
+        if len(self.small) > len(self.large) + 1:
+            val = -1 * heapq.heappop(self.small)
+            heapq.heappush(self.large, val)
+        if len(self.large) > len(self.small) + 1:
+            val = -1 * heapq.heappop(self.large)
+            heapq.heappush(self.small, val)
+
+
+    def findMedian(self):
+        """
+        :rtype: float
+        """
+        if len(self.small) > len(self.large):
+            return float(-1 * self.small[0])
+
+        if len(self.large) > len(self.small):
+            return float(self.large[0])
+
+        return (-1 * self.small[0] + self.large[0]) / 2.0
+
+#TC - O(m * logn) for addNum(), O(m) for findMedian()
+#SC - O(n)
+
+#We need to explicitly cast both odd and even case for float
+#For odd use float keyword and for even case divide by 2.0      
