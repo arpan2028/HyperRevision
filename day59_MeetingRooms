@@ -1,0 +1,11 @@
+#Title Modified to Avoid copyright Issue
+
+  class Solution:
+    def canAttendAll(self, slots: List[Tuple[int, int]]) -> bool:
+        slots.sort(key=lambda x: x[0])
+        for i in range(1, len(slots)):
+            if slots[i][0] < slots[i - 1][1]:
+                return False
+        return True
+
+          
