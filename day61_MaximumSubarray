@@ -1,0 +1,17 @@
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        curSum = 0
+        maxSum = float('-inf')
+        for i in range(len(nums)):
+            curSum += nums[i]
+            maxSum = max(maxSum, curSum)
+            if curSum < 0:
+                curSum = 0
+        return maxSum
+
+# TC - O(n)
+# SC - 0(1)
