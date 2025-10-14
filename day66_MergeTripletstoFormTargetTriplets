@@ -1,0 +1,21 @@
+class Solution(object):
+    def mergeTriplets(self, triplets, target):
+        """
+        :type triplets: List[List[int]]
+        :type target: List[int]
+        :rtype: bool
+        """
+        x, y, z = target
+        found = [False, False, False]
+
+        for a, b, c in triplets:
+            if a <= x and b <= y and c <= z:
+                if a == x: found[0] = True
+                if b == y: found[1] = True
+                if c == z: found[2] = True
+        return all(found)
+        
+# TC - O(n)
+# SC - O(1)
+
+#Warning. This problem will crush your confidence and will mess with your brain. lol
