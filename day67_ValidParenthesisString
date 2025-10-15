@@ -1,0 +1,29 @@
+class Solution(object):
+    def checkValidString(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        leftMin, leftMax = 0,0
+        for c in s:
+            if c == "(":
+                leftMin += 1
+                leftMax += 1
+            elif c == ")":
+                leftMin -= 1
+                leftMax -= 1
+            else:
+                leftMin -= 1
+                leftMax += 1
+            
+            if leftMax < 0:
+                return False
+            if leftMin < 0:
+                leftMin = 0
+            
+        return leftMin == 0
+
+# TC - O(n)
+# SC - O(1)
+
+#This is a greedy solution as we optimize leftMin = 0 when leftMin < 0.
