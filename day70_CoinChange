@@ -1,0 +1,42 @@
+#Greedy solution(51 out of 189 test cases)
+class Solution:
+    def coinChange(self, coins, amount):
+        if amount == 0:
+            return 0
+
+        coins.sort(reverse=True)   # Start with the largest coin
+        count = 0
+
+        for coin in coins:
+            if amount >= coin:
+                use = amount // coin
+                count += use
+                amount -= coin * use
+
+            if amount == 0:
+                return count
+
+        # If you couldn't make up the amount exactly
+        return -1
+
+#Recursion + Memoization
+class Solution:
+    def coinChange(self, coins, amount):
+        memo = {}
+
+        def dfs(amount):
+            if amount == 0:
+                return 0
+                
+            if amount in memo:
+                return memo[amount]
+
+            res = 1e9
+            for coin in coins:
+                if amount - coin >= 0:
+                    res = min(res, 1 + dfs(amount - coin))
+            memo[amount] = res
+            return res
+
+        minCoins = dfs(amount)
+        return -1 if minCoins >= 1e9 else minCoins
