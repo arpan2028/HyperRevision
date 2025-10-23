@@ -14,7 +14,7 @@ class Solution(object):
 # TC - O(1)
 # SC - O(1)
 
-#Optimal Way
+#Optimal Way(Brain Kernighan's Algorithm)
 class Solution(object):
     def hammingWeight(self, n):
         """
