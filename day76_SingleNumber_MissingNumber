@@ -1,0 +1,39 @@
+#Single Number
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        res = 0
+        for num in nums:
+            res = num ^ res
+        return res
+
+# TC - O(n)
+# SC - O(1)
+
+
+
+
+
+
+
+#Missing Number
+class Solution(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        obtainedxor = 0
+        expectedxor = 0
+        for num in nums:
+            obtainedxor ^= num
+        for i in range(len(nums) + 1):
+            expectedxor ^= i
+        return obtainedxor ^ expectedxor
+
+# TC - O(n)
+# SC - O(1)
+        
