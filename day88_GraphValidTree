@@ -1,0 +1,34 @@
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+
+        visited = [0] * n
+        adj = {i: [] for i in range(n)}
+        for u, v in edges:
+            adj[u].append(v)
+            adj[v].append(u)
+
+        def dfs(node, parent):
+            visited[node] = 1
+            for nei in adj[node]:
+                if visited[nei] == 0:
+                    if dfs(nei, node):
+                        return True
+                elif nei != parent:
+                    return True
+            return False
+
+        if dfs(0, -1):
+            return False
+        
+        if sum(visited) != n:
+            return False
+
+        return True
+
+# TC - O(V + E)
+# SC - O(V + E)
+
+        
+        
+
+        
