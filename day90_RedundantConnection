@@ -1,0 +1,39 @@
+
+class Solution(object):
+    def findRedundantConnection(self, edges):
+        """
+        :type edges: List[List[int]]
+        :rtype: List[int]
+        """
+        n = len(edges)
+        count = 0
+        adj = [[] for _ in range(n + 1)]
+
+        def dfs(node, parent):
+            if visited[node]:
+                return True
+            visited[node] = True
+            for nei in adj[node]:
+                if not visited[nei]:
+                    if dfs(nei, node):
+                        return True
+                elif nei != parent:
+                    return True
+            return False
+
+        for u, v in edges:
+            adj[u].append(v)
+            adj[v].append(u)
+            visited = [False] * (n + 1) 
+            if dfs(u, -1):
+                return [u, v]
+        return []
+
+# TC - O(n^2), Not an optimal solution but works.
+# SC - O(n)        
+
+
+    
+            
+            
+
