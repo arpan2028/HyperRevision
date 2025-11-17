@@ -1,0 +1,21 @@
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows = defaultdict(set)
+        cols = defaultdict(set)
+        squares = defaultdict(set)
+
+        for i in range(9):
+            for j in range(9):
+                grid = board[i][j]
+                if grid == ".":
+                    continue
+                if grid in rows[i] or grid in cols[j] or grid in squares[(i // 3, j // 3)]:
+                    return False
+                rows[i].add(grid)
+                cols[j].add(grid)
+                squares[(i // 3, j // 3)].add(grid)
+        return True
+
+#  TC - O(n^2)
+#  SC - O(n^2)
+                
